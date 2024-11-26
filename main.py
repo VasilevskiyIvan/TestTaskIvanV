@@ -81,7 +81,7 @@ async def model_selection_handler(message: types.Message):
                             "Точность около 95%, но возможны ошибки на схожих видах птиц. Точность на оригинальном тесте >0.95, точность на новых данных >0.75 (в среднем около 0.85)")
 
     elif selected_model == "Собственный аналог ResNet (вариант 2)":
-        model = MyResNet2(len(class_names))  # Используем новый класс
+        model = MyResNet2(len(class_names))
         model.load_state_dict(torch.load(myresnet2_model_path, map_location=device))
         model = model.to(device)
         model.eval()
