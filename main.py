@@ -60,7 +60,7 @@ async def model_selection_handler(message: types.Message):
         model.load_state_dict(torch.load(mycnn_model_path, map_location=device))
         model = model.to(device)
         await message.reply("Вы выбрали модель: Собственная CNN."
-                            "Точность около 95%, но модель чувствительна к фону. Точность на оригинальном тесте около 0.95, точность на новых данных около 0.875")
+                            "Точность около 95%, но модель чувствительна к фону. Точность на оригинальном тесте около 0.95, точность на новых данных около 0.87")
 
     elif selected_model == "Дообученный ResNet":
         model = models.resnet34(pretrained=False)
@@ -107,7 +107,7 @@ async def photo_handler(message: types.Message):
         _, predicted_idx = torch.max(output, 1)
         predicted_class = class_names[predicted_idx.item()]
 
-    await message.reply(f"Птица на данной фотографии относится к классу: *{predicted_class}*", parse_mode="Markdown")
+    await message.reply(f"Птица относится к классу: *{predicted_class}*", parse_mode="Markdown")
 
 dp.include_router(router)
 
