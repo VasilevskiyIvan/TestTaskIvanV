@@ -59,8 +59,9 @@ async def model_selection_handler(message: types.Message):
         model = MyCNN(len(class_names))
         model.load_state_dict(torch.load(mycnn_model_path, map_location=device))
         model = model.to(device)
+        model.eval()
         await message.reply("Вы выбрали модель: Собственная CNN."
-                            "Точность около 95%, но модель чувствительна к фону. Точность на оригинальном тесте около 0.95, точность на новых данных около 0.875")
+                            "Точность около 95%, но модель чувствительна к фону. Точность на оригинальном тесте около 0.95, точность на новых данных около 0.87")
 
     elif selected_model == "Дообученный ResNet":
         model = models.resnet34(pretrained=False)
@@ -81,7 +82,7 @@ async def model_selection_handler(message: types.Message):
                             "Точность около 95%, но возможны ошибки на схожих видах птиц. Точность на оригинальном тесте >0.95, точность на новых данных >0.75 (в среднем около 0.85)")
 
     elif selected_model == "Собственный аналог ResNet (вариант 2)":
-        model = MyResNet2(len(class_names))  # Используем новый класс
+        model = MyResNet2(len(class_names))
         model.load_state_dict(torch.load(myresnet2_model_path, map_location=device))
         model = model.to(device)
         model.eval()
@@ -107,7 +108,7 @@ async def photo_handler(message: types.Message):
         _, predicted_idx = torch.max(output, 1)
         predicted_class = class_names[predicted_idx.item()]
 
-    await message.reply(f"Птица на данной фотографии относится к классу: *{predicted_class}*", parse_mode="Markdown")
+    await message.reply(f"Птица относится к классу: *{predicted_class}*", parse_mode="Markdown")
 
 dp.include_router(router)
 
