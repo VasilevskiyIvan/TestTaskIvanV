@@ -59,6 +59,7 @@ async def model_selection_handler(message: types.Message):
         model = MyCNN(len(class_names))
         model.load_state_dict(torch.load(mycnn_model_path, map_location=device))
         model = model.to(device)
+        model.eval()
         await message.reply("Вы выбрали модель: Собственная CNN."
                             "Точность около 95%, но модель чувствительна к фону. Точность на оригинальном тесте около 0.95, точность на новых данных около 0.875")
 
